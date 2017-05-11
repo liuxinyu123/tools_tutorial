@@ -1,4 +1,4 @@
-# Git教程    
+# Git教程 
 # Git是目前世界上最先进的分布式版本控制系统（没有之一）
 # 安装Git
 > 安装完成后，还需要最后一步设置，在命令行输入：
@@ -43,4 +43,17 @@ git add file1.txt
 git add file2.txt file3.txt
 git commit -m "add 3 file"    
 ```
+* 当我们修改```readme.md```后，运行git status命令看看结果     
+```
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   README.md
+
+(use "git add <file>..." to include in what will be committed) 
+```
+`git status`命令可以让我们时刻掌握仓库当前的状态，上面的命令告诉我们，readme.md被修改过了，但还没有准备提交的修改     
 
