@@ -55,5 +55,7 @@ Changes not staged for commit:
 
 (use "git add <file>..." to include in what will be committed) 
 ```
-`git status`命令可以让我们时刻掌握仓库当前的状态，上面的命令告诉我们，readme.md被修改过了，但还没有准备提交的修改     
+`git status`命令可以让我们时刻掌握仓库当前的状态，上面的命令告诉我们，readme.md被修改过了，但还没有准备提交的修改    
+
+如果能看看具体修改了什么内容,需要用git diff这个命令看看  
 
