@@ -141,5 +141,41 @@ Git的版本库里存了很多东西，其中最重要的就是称为`stage`（�
 ## 小结   
 命令`git rm`用于删除一个文件。如果一个文件已经被提交到版本库，那么你永远不用担心误删，但是要小心，你只能恢复文件到最新版本，你会丢失最近一次提交后你修改的内容。 
 
+# 远程仓库   
+自行注册GitHub账号。由于你的本地Git仓库和GitHub仓库之间的传输是通过SSH加密的，所以，需要一点设置     
+* 创建SSH Key,在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有`id_rsa`和`id_rsa.pub`这两个文件，如果已经有了，可直接跳到下一步,如果没有则可以通过`ssh-keygen -t rsa -C "youremail@example.com"`来创建      
+* 登陆GitHub，打开“Account settings”，“SSH and GPG keys”页面,然后，点“New SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容(如果出错，先用`cat`命令将`id_rsa.pub`文件输出到终端，然后从中断拷贝)     
 
+## 为什么GitHub需要SSH Key呢？    
+> 因为GitHub需要识别出你推送的提交确实是你推送的，而不是别人冒充的，而Git支持SSH协议，所以，GitHub只要知道了你的公钥，就可以确认只有你自己才能推送。当然，GitHub允许你添加多个Key。假定你有若干电脑，你一会儿在公司提交，一会儿在家里提交，只要把每台电脑的Key都添加到GitHub，就可以在每台电脑上往GitHub推送了。      
+
+## 添加远程库    
+* 首先，登陆GitHub，然后，在右上角找到“Create a new repo”按钮，创建一个新的仓库     
+* 我们根据GitHub的提示，在本地的`someDir`仓库下运行如下命令 (选择其一)    
+> `git remote add origin git@github.com:yourname/someDir.git`     
+> `git remote add origin https://github.com/youname/someDir.git`     
+
+添加后，远程库的名字就是`origin`，这是Git默认的叫法，也可以改成别的，但是`origin`这个名字一看就知道是远程库     
+* 把本地库的所有内容推送到远程库上      
+> `git push -u origin master`     
+
+把本地库的内容推送到远程，用`git push`命令，实际上是把当前分支`master`推送到远程。     
+由于远程库是空的，我们第一次推送`master`分支时，加上了`-u`参数，Git不但会把本地的`master`分支内容推送的远程新的`master`分支，还会把本地的`master`分支和远程的`master`分支关联起来，在以后的推送或者拉取时就可以简化命令。    
+
+## 从远程库克隆到本地    
+> 用命令`git clone`克隆一个本地库   `git clone git@github.com:yourname/reponame.git`     
+
+如果有多个人协作开发，那么每个人各自从远程克隆一份就可以了    
+你也许还注意到，GitHub给出的地址不止一个，还可以用`https://github.com/yourname/reponame.git`这样的地址。实际上，Git支持多种协议，默认的`git://`使用`ssh`，但也可以使用`https`等其他协议。使用`https`除了速度慢以外，还有个最大的麻烦是每次推送都必须输入口令，但是在某些只开放`http`端口的公司内部就无法使用`ssh`协议而只能用`https`       
+
+### 小结    
+* 要克隆一个仓库，首先必须知道仓库的地址，然后使用`git clone`命令克隆    
+* Git支持多种协议，包括`https`，但通过`ssh`支持的原生`git`协议,速度最快    
+
+# 分支管理   
+* 使用场景   
+> 分支在实际中有什么用呢？假设你准备开发一个新功能，但是需要两周才能完成，第一周你写了50%的代码，如果立刻提交，由于代码还没写完，不完整的代码库会导致别人不能干活了。如果等代码全部写完再一次提交，又存在丢失每天进度的巨大风险。     
+
+* 分支的作用   
+> 现在有了分支，就不用怕了。你创建了一个属于你自己的分支，别人看不到，还继续在原来的分支上正常工作，而你在自己的分支上干活，想提交就提交，直到开发完毕后，再一次性合并到原来的分支上，这样，既安全，又不影响别人工作。     
 
